@@ -1,4 +1,4 @@
-# action-setup-python
+# setup-python-action
 
 This action provides the following functionality for GitHub Actions users:
 
@@ -14,7 +14,7 @@ See [action.yml](action.yml)
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/action-setup-python
+- uses: LizardByte/setup-python-action
   with:
     python-version: '3.10'
 - run: python my_script.py
@@ -24,7 +24,7 @@ steps:
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/action-setup-python
+- uses: LizardByte/setup-python-action
   with:
     python-version: '2.7'
 - run: python my_script.py
@@ -34,7 +34,7 @@ steps:
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/action-setup-python
+- uses: LizardByte/setup-python-action
   with:
     python-version: 'pypy3.9'
 - run: python my_script.py
