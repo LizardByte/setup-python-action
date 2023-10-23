@@ -54,3 +54,33 @@ jobs:
             --tb=native \
             --verbose \
             tests
+
+  release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs:
+      - pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Action
+        id: setup-release
+        uses: LizardByte/setup-release-action@v2023.10.22-c3791c6
+        with:
+          fail_on_events_api_error: true
+          github_token: ${{ secrets.GH_BOT_TOKEN }}
+
+      - name: Create Release
+        id: action
+        uses: LizardByte/create-release-action@v2023.10.22-57d76be
+        with:
+          allowUpdates: false
+          artifacts: ''
+          body: ''
+          discussionCategory: announcements
+          generateReleaseNotes: true
+          name: ${{ steps.setup-release.outputs.release_tag }}
+          prerelease: ${{ steps.setup-release.outputs.publish_stable_release != 'true' }}
+          tag: ${{ steps.setup-release.outputs.release_tag }}
+          token: ${{ secrets.GH_BOT_TOKEN }}
