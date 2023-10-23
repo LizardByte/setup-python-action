@@ -14,7 +14,7 @@ See [action.yml](action.yml)
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/setup-python-action
+- uses: LizardByte/setup-python-action@main
   with:
     python-version: '3.10'
 - run: python my_script.py
@@ -24,7 +24,7 @@ steps:
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/setup-python-action
+- uses: LizardByte/setup-python-action@main
   with:
     python-version: '2.7'
 - run: python my_script.py
@@ -34,7 +34,7 @@ steps:
 ```yaml
 steps:
 - uses: actions/checkout@v4
-- uses: LizardByte/setup-python-action
+- uses: LizardByte/setup-python-action@main
   with:
     python-version: 'pypy3.9'
 - run: python my_script.py
