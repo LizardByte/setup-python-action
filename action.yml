@@ -44,15 +44,9 @@ runs:
       shell: bash
       if: ${{ inputs.python-version == '2.7' && runner.os == 'macOS' }}
       run: |
-        python_version=$(python --version 2>&1)
-        echo "Python version: ${python_version}"
-
-        if [[ "${python_version}" == *"Python 2.7"* ]]; then
-          echo "${python_version} already installed, nothing to do"
-        else
-          echo "Python 2.7 not installed"
-          exit 1
-        fi
+        brew install pyenv
+        export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"
+        pyenv install 2.7.18
 
     - name: Setup Python Environment
       if: ${{ inputs.python-version == '2.7' }}
@@ -76,6 +70,10 @@ runs:
           venv_base_path="/tmp/python27/venv"
           venv_dir="bin"
         elif [[ "${{ runner.os }}" == "macOS" ]]; then
+          export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"  # use this instead of GITHUB_PATH to be first
+          pyenv global 2.7.18
+          # set python to use `$(pyenv root)/versions/2.7.18/bin`
+          # export PATH="$(pyenv root)/versions/2.7.18/bin:$PATH"
           venv_base_path="/tmp/python27/venv"
           venv_dir="bin"
         fi
