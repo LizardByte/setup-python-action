@@ -67,16 +67,14 @@ jobs:
 
       - name: Run Action
         id: setup-release
-        # dependabot cannot pick up our tags, so use the commit hash
-        uses: LizardByte/setup-release-action@38bc9762d673470bd6f78613ae88b6b62c6e282b
+        uses: LizardByte/setup-release-action@v2023.1128.1400
         with:
           fail_on_events_api_error: true
           github_token: ${{ secrets.GH_BOT_TOKEN }}
 
       - name: Create Release
         id: action
-        # dependabot cannot pick up our tags, so use the commit hash
-        uses: LizardByte/create-release-action@cd331e8752cdc0b66d75ad41ada0c16cae7cdf73
+        uses: LizardByte/create-release-action@v2023.1128.2625
         with:
           allowUpdates: false
           artifacts: ''
