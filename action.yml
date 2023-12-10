@@ -44,8 +44,18 @@ runs:
       shell: bash
       if: ${{ inputs.python-version == '2.7' && runner.os == 'macOS' }}
       run: |
+        # if macos version >= 13
+        if [[ $(sw_vers -productVersion | cut -d '.' -f1) -ge 13 ]]; then
+          echo "macOS version >= 13, relinking python@3.12 to avoid brew error"
+          brew unlink python@3.12
+          brew link --overwrite python@3.12
+        fi
+
+        # install pyenv
         brew install pyenv
         export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"
+
+        # install python 2.7
         pyenv install 2.7.18
 
     - name: Setup Python Environment
