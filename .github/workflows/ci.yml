@@ -74,7 +74,7 @@ jobs:
 
       - name: Create Release
         id: action
-        uses: LizardByte/create-release-action@v2023.1210.832
+        uses: LizardByte/create-release-action@v2023.1219.224026
         with:
           allowUpdates: false
           artifacts: ''
