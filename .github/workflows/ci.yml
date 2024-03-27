@@ -18,6 +18,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        include:
+          - os: windows-2019
+            python: 2.7
+            architecture: x86
+          - os: windows-2022
+            python: 2.7
+            architecture: x86
         os:
           - macos-11
           - macos-12
@@ -27,6 +34,7 @@ jobs:
           - ubuntu-20.04
           - ubuntu-22.04
         python: ["2.7", "3.8", "3.9", "3.10", "3.11"]
+        architecture: ["x64"]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -38,6 +46,7 @@ jobs:
         uses: ./
         with:
           python-version: ${{ matrix.python }}
+          architecture: ${{ matrix.architecture }}
 
       - name: Install Python Dependencies
         run: |
