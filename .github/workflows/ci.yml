@@ -76,7 +76,7 @@ jobs:
 
       - name: Run Action
         id: setup-release
-        uses: LizardByte/setup-release-action@v2024.101.153021
+        uses: LizardByte/setup-release-action@v2024.419.10846
         with:
           fail_on_events_api_error: true
           github_token: ${{ secrets.GH_BOT_TOKEN }}
