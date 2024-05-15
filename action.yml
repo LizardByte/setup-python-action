@@ -35,36 +35,25 @@ runs:
 
         choco install python2 --version=2.7.18 -y --no-progress ${extra_flags}
 
-    - name: Linux Install
+    - name: Unix Install
       shell: bash
-      if: ${{ inputs.python-version == '2.7' && runner.os == 'Linux' }}
+      if: ${{ inputs.python-version == '2.7' && (runner.os == 'Linux' || runner.os == 'macOS') }}
       run: |
-        # get the version from /etc/os-release
-        version=$(grep -oP '(?<=VERSION_ID=")\d+' /etc/os-release)
-        echo "Ubuntu version: $version"
+        if [[ "${{ runner.os }}" == "Linux" ]]; then
+          curl https://pyenv.run | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then
+          # if macos version >= 13
+          if [[ $(sw_vers -productVersion | cut -d '.' -f1) -ge 13 ]]; then
+            echo "macOS version >= 13, relinking python@3.12 to avoid brew error"
+            brew unlink python@3.12
+            brew link --overwrite python@3.12
+          fi
 
-        sudo apt-get update
-
-        if [[ $version == 20 ]]; then
-          sudo apt-get install python2.7 -y
-        elif [[ $version == 22 ]]; then
-          sudo apt-get install python2 python-pip -y
+          # install pyenv
+          brew install pyenv
+          export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"
         fi
-
-    - name: macOS Install
-      shell: bash
-      if: ${{ inputs.python-version == '2.7' && runner.os == 'macOS' }}
-      run: |
-        # if macos version >= 13
-        if [[ $(sw_vers -productVersion | cut -d '.' -f1) -ge 13 ]]; then
-          echo "macOS version >= 13, relinking python@3.12 to avoid brew error"
-          brew unlink python@3.12
-          brew link --overwrite python@3.12
-        fi
-
-        # install pyenv
-        brew install pyenv
-        export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"
 
         # install python 2.7
         pyenv install 2.7.18
@@ -86,12 +75,15 @@ runs:
           venv_base_path="/c/tmp/python27/venv"
           venv_base_path_windows="C:\\tmp\\python27\\venv"
           venv_dir="Scripts"
-        elif [[ "${{ runner.os }}" == "Linux" ]]; then
-          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
-          venv_base_path="/tmp/python27/venv"
-          venv_dir="bin"
-        elif [[ "${{ runner.os }}" == "macOS" ]]; then
-          export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"  # use this instead of GITHUB_PATH to be first
+        elif [[ "${{ runner.os }}" == "Linux" || "${{ runner.os }}" == "macOS" ]]; then
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            export PATH="$HOME/.pyenv/bin:$PATH"
+
+            # update alternatives
+            sudo update-alternatives --install /usr/bin/python python $(pyenv root)/shims/python 1
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            export PATH="$(pyenv root)/shims:$(pyenv root)/bin:$PATH"  # use this instead of GITHUB_PATH to be first
+          fi
           pyenv global 2.7.18
           # set python to use `$(pyenv root)/versions/2.7.18/bin`
           # export PATH="$(pyenv root)/versions/2.7.18/bin:$PATH"
