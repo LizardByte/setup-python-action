@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
@@ -75,23 +75,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Run Action
+      - name: Setup Release
         id: setup-release
-        uses: LizardByte/setup-release-action@v2024.511.154635
+        uses: LizardByte/setup-release-action@v2024.520.193857
         with:
           fail_on_events_api_error: true
           github_token: ${{ secrets.GH_BOT_TOKEN }}
 
       - name: Create Release
         id: action
-        uses: LizardByte/create-release-action@v2024.511.153520
+        uses: LizardByte/create-release-action@v2024.520.193838
         with:
           allowUpdates: false
           artifacts: ''
-          body: ''
           discussionCategory: announcements
           generateReleaseNotes: true
           name: ${{ steps.setup-release.outputs.release_tag }}
-          prerelease: ${{ steps.setup-release.outputs.publish_stable_release != 'true' }}
+          prerelease: true
           tag: ${{ steps.setup-release.outputs.release_tag }}
           token: ${{ secrets.GH_BOT_TOKEN }}
