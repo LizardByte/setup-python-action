@@ -77,7 +77,7 @@ jobs:
 
       - name: Setup Release
         id: setup-release
-        uses: LizardByte/setup-release-action@v2024.608.210128
+        uses: LizardByte/setup-release-action@v2024.716.30003
         with:
           fail_on_events_api_error: true
           github_token: ${{ secrets.GH_BOT_TOKEN }}
