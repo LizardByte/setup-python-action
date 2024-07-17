@@ -64,6 +64,7 @@ jobs:
             -rxXs \
             --tb=native \
             --verbose \
+            --color=yes \
             tests
 
   release:
