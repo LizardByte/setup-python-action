@@ -84,12 +84,11 @@ jobs:
 
       - name: Create Release
         id: action
-        uses: LizardByte/create-release-action@v2024.611.132610
+        uses: LizardByte/create-release-action@v2024.919.143026
         with:
           allowUpdates: false
           artifacts: ''
           body: ${{ steps.setup-release.outputs.release_body }}
-          discussionCategory: announcements
           generateReleaseNotes: ${{ steps.setup-release.outputs.release_generate_release_notes }}
           name: ${{ steps.setup-release.outputs.release_tag }}
           prerelease: true
