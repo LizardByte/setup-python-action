@@ -26,7 +26,6 @@ jobs:
             python: 2.7
             architecture: x86
         os:
-          - macos-12
           - macos-13
           - macos-14
           - windows-2019
