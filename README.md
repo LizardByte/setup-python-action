@@ -52,4 +52,4 @@ The scripts and documentation in this project are released under the [MIT Licens
 ## Contributions
 
 Contributions are welcome! See our
-[Contributor's Guide](https://docs.lizardbyte.dev/en/latest/developers/code_of_conduct.html).
+[Contributor's Guide](https://docs.lizardbyte.dev/latest/developers/code_of_conduct.html).
