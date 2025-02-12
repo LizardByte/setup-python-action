@@ -77,13 +77,13 @@ jobs:
 
       - name: Setup Release
         id: setup-release
-        uses: LizardByte/setup-release-action@v2024.919.143601
+        uses: LizardByte/setup-release-action@v2025.102.14715
         with:
           github_token: ${{ secrets.GH_BOT_TOKEN }}
 
       - name: Create Release
         id: action
-        uses: LizardByte/create-release-action@v2024.919.143026
+        uses: LizardByte/create-release-action@v2025.102.13208
         with:
           allowUpdates: false
           artifacts: ''
