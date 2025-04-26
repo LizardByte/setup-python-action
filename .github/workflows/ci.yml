@@ -1,12 +1,19 @@
 ---
 name: CI
+permissions:
+  contents: read
 
 on:
   pull_request:
-    branches: [master]
-    types: [opened, synchronize, reopened]
+    branches:
+      - master
+    types:
+      - opened
+      - synchronize
+      - reopened
   push:
-    branches: [master]
+    branches:
+      - master
   workflow_dispatch:
 
 concurrency:
@@ -15,6 +22,7 @@ concurrency:
 
 jobs:
   pytest:
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -32,10 +40,11 @@ jobs:
           - windows-2022
           - ubuntu-22.04
           - ubuntu-24.04
-        python: ["2.7", "3.11"]
-        architecture: ["x64"]
-
-    runs-on: ${{ matrix.os }}
+        python:
+          - "2.7"
+          - "3.11"
+        architecture:
+          - "x64"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,6 +78,8 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs:
       - pytest
+    permissions:
+      contents: write  # needed for setup-release-action
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
