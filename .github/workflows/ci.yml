@@ -27,17 +27,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-2019
+          - os: windows-2022
             python: 2.7
             architecture: x86
-          - os: windows-2022
+          - os: windows-2025
             python: 2.7
             architecture: x86
         os:
           - macos-13
           - macos-14
-          - windows-2019
           - windows-2022
+          - windows-2025
           - ubuntu-22.04
           - ubuntu-24.04
         python:
