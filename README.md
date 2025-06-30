@@ -1,5 +1,9 @@
 # setup-python-action
 
+> [!WARNING]
+> This action is deprecated and will not be maintained anymore.
+> Please use our [LizardByte/actions](https://github.com/LizardByte/actions) monorepo instead.
+
 This action provides the following functionality for GitHub Actions users:
 
 - Installing a version of Python or PyPy and (by default) adding it to the PATH, including Python 2.7.
